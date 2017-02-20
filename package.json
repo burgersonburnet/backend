@@ -19,5 +19,19 @@
   "bugs": {
     "url": "https://github.com/burgersonburnet/backend/issues"
   },
-  "homepage": "https://github.com/burgersonburnet/backend#readme"
+  "homepage": "https://github.com/burgersonburnet/backend#readme",
+  "dependencies": {
+    "graphql": "^0.9.1",
+    "graphql-server-koa": "^0.6.0",
+    "koa": "^1.2.5",
+    "koa-send": "^3.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.16.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "nodemon": "^1.11.0"
+  }
 }
