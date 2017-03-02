@@ -1,7 +1,44 @@
+'use strict';
 const koa = require('koa');
 const send = require('koa-send');
+const Router = require('koa-router'); // koa-router@next
+const bodyParser = require('koa-bodyparser'); // koa-bodyparser@next
+const graphqlKoa = require ('graphql-server-koa').graphqlKoa;
+const myGraphQLSchema = require('./api/schema.js');
 
-const app = koa();
+const app = new koa();
+const router = new Router();
+app.use(bodyParser());
+
+// x-response-time
+app.use(async (ctx, next) => {
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+});
+
+// logger
+app.use(async (ctx, next) => {
+  console.log('start log', ctx.query)
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms} ms`);
+});
+
+app.use(async (ctx, next) => {
+  if (this.path === '/') {
+    await send(ctx, `/${nextFramework.next().value}/index.html`);
+  } else {
+    await next();
+  }
+});
+router.get('/graphql', graphqlKoa({ schema: myGraphQLSchema }));
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+app.listen(3000);
 
 function* roundRobin() {
   const frameworks = {
@@ -19,30 +56,3 @@ function* roundRobin() {
   }
 }
 let nextFramework = roundRobin();
-
-// x-response-time
-app.use(function* (next) {
-  const start = new Date();
-  yield next;
-  const ms = new Date() - start;
-  this.set('X-Response-Time', `${ms} ms`);
-});
-
-// logger
-app.use(function* (next) {
-  const start = new Date();
-  yield next;
-  const ms = new Date() - start;
-  console.log(`${this.method} ${this.url} - ${ms} ms`);
-});
-
-// response
-app.use(function* () {
-  if (this.path === '/') {
-    yield send(this, `/${nextFramework.next().value}/index.html`);
-  } else {
-    yield send(this, this.path);
-  }
-});
-
-app.listen(3000);

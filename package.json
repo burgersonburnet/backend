@@ -23,7 +23,10 @@
   "dependencies": {
     "graphql": "^0.9.1",
     "graphql-server-koa": "^0.6.0",
-    "koa": "^1.2.5",
+    "graphql-tools": "^0.10.0",
+    "koa": "^2.0.1",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.0.1",
     "koa-send": "^3.3.0"
   },
   "devDependencies": {
